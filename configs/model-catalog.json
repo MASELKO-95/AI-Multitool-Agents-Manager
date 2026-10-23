@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "verified": "2026-10-07",
+  "models": [
+    {
+      "id": "qwen3.5:4b",
+      "source": "https://ollama.com/library/qwen3.5:4b",
+      "license": "Apache-2.0",
+      "quantization": "Q4_K_M + projector",
+      "weights_mib": 3815,
+      "reserve_mib": 512,
+      "priority": [
+        90,
+        80,
+        95,
+        35,
+        75,
+        0
+      ],
+      "note": "Small general model for conversation, planning and simple code. Engine version compatibility requires verification."
+    },
+    {
+      "id": "qwen3.5:2b",
+      "source": "https://ollama.com/library/qwen3.5:2b",
+      "license": "Apache-2.0",
+      "quantization": "Q8_0 + projector",
+      "weights_mib": 2957,
+      "reserve_mib": 384,
+      "priority": [
+        65,
+        55,
+        65,
+        20,
+        55,
+        0
+      ],
+      "note": "Lighter option for simple tasks; a smaller model does not guarantee accurate analysis of complex code."
+    },
+    {
+      "id": "qwen2.5-coder:7b",
+      "source": "https://ollama.com/library/qwen2.5-coder:7b",
+      "license": "Apache-2.0",
+      "quantization": "Q4_K_M",
+      "weights_mib": 4483,
+      "reserve_mib": 512,
+      "priority": [
+        20,
+        95,
+        35,
+        0,
+        0,
+        0
+      ],
+      "note": "Code generation, explanation and repair specialist; a candidate to evaluate on an 8 GiB GPU."
+    },
+    {
+      "id": "qwen2.5-coder:3b",
+      "source": "https://ollama.com/library/qwen2.5-coder:3b",
+      "license": "Qwen Research License",
+      "quantization": "Q4_K_M",
+      "weights_mib": 1812,
+      "reserve_mib": 384,
+      "priority": [
+        10,
+        70,
+        20,
+        0,
+        0,
+        0
+      ],
+      "note": "Small specialist for code fragments. Its license differs from the 7B variant."
+    },
+    {
+      "id": "translategemma:4b",
+      "source": "https://ollama.com/library/translategemma:4b",
+      "license": "Gemma Terms of Use",
+      "quantization": "Q4_K_M",
+      "weights_mib": 3148,
+      "reserve_mib": 512,
+      "priority": [
+        0,
+        0,
+        0,
+        95,
+        0,
+        0
+      ],
+      "note": "Dedicated translation, including Polish. Requires the correct template; a separate validator checks CSV placeholders."
+    },
+    {
+      "id": "translategemma:12b",
+      "source": "https://ollama.com/library/translategemma:12b",
+      "license": "Gemma Terms of Use",
+      "quantization": "Q4_K_M",
+      "weights_mib": 7725,
+      "reserve_mib": 768,
+      "priority": [
+        0,
+        0,
+        0,
+        100,
+        0,
+        0
+      ],
+      "note": "Larger translation model. With limited VRAM, consider CPU/offload or the 4B variant; do not load both at once."
+    },
+    {
+      "id": "qwen3-vl:8b",
+      "source": "https://ollama.com/library/qwen3-vl:8b",
+      "license": "Apache-2.0",
+      "quantization": "Q4_K_M",
+      "weights_mib": 5818,
+      "reserve_mib": 768,
+      "priority": [
+        30,
+        20,
+        30,
+        10,
+        100,
+        0
+      ],
+      "note": "Candidate for local screenshot review. Images increase memory use; reviews are advisory."
+    },
+    {
+      "id": "qwen3-embedding:0.6b",
+      "source": "https://ollama.com/library/qwen3-embedding:0.6b",
+      "license": "Apache-2.0",
+      "quantization": "Q8_0",
+      "weights_mib": 610,
+      "reserve_mib": 256,
+      "priority": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        100
+      ],
+      "note": "Memory fragment indexing and retrieval. Does not generate chat replies; requires an embedding adapter."
+    }
+  ]
+}

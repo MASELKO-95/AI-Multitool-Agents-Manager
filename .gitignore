@@ -1,55 +1,130 @@
-# Prerequisites
+# CMake build trees and generated files.
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/compile_commands.json
+/Makefile
+
+# Compiled objects, libraries, executables and debug information.
 *.d
-
-# Object files
 *.o
-*.ko
 *.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
 *.a
+*.lib
 *.la
 *.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
 *.so
 *.so.*
 *.dylib
-
-# Executables
+*.dll
 *.exe
 *.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
+*.app/
+*.gch
+*.pch
 *.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-
-# debug information files
+*.ilk
+*.exp
 *.dwo
+*.dSYM/
+
+# Python environments and generated caches.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Private application state, settings and real task histories.
+.local/
+.aimt-projects/
+.aimt-learning/
+/configs/module-settings/
+/configs/coordinator-learning/
+/data/
+
+# Local accounts and agent configuration.
+.codex/
+.agents/
+.aws/
+.ssh/
+.gnupg/
+.git-credentials
+.gitconfig
+.netrc
+/config.toml
+auth.json
+auth.json.*
+auth.*.json
+credentials
+credentials.*
+secrets.*
+tokens.json
+token.json
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.kdbx
+*.secret
+*.token
+id_rsa
+id_ed25519
+
+# Runtime logs, local databases, model weights and packages.
+*.log
+*.jsonl
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.db
+*.db-wal
+*.db-shm
+*.gguf
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.deb
+*.rpm
+*.AppImage
+
+# Editor and operating system state.
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
+# Private working notes and conversation records.
+/WORK_LOG.md
+/docs/PRZEKAZANIE-SESJI-*.md
+/docs/ROZMOWA-*.md
+/docs/RATCHET-*.md
+/docs/CHECKPOINT-RATCHET-*.md
+
+# Test suites and evaluation scripts are not distributed.
+/tests/
+/tools/test-*.py
+/tools/qualify-expert-model.py
+/tools/research-local-task.py

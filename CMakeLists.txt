@@ -1,0 +1,78 @@
+cmake_minimum_required(VERSION 3.20)
+project(ai_multitool_agents_manager VERSION 0.1.0 LANGUAGES C CXX)
+
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+option(AIMT_ENABLE_SANITIZERS "Enable ASan and UBSan in development builds" OFF)
+option(AIMT_BUILD_GUI "Build the native C desktop interface" ON)
+option(AIMT_BUILD_LOCAL_SERVICES "Build local model tools (no SDL dependency)" ON)
+
+add_library(aimt_build_options INTERFACE)
+if(MSVC)
+    target_compile_options(aimt_build_options INTERFACE /W4)
+elseif(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang" AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(aimt_build_options INTERFACE -Wall -Wextra -Wpedantic)
+endif()
+
+if(AIMT_ENABLE_SANITIZERS)
+    if(MSVC OR NOT CMAKE_C_COMPILER_ID MATCHES "GNU|Clang" OR NOT CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        message(FATAL_ERROR "This sanitizer profile requires GCC or Clang")
+    endif()
+    target_compile_options(aimt_build_options INTERFACE -fsanitize=address,undefined -fno-omit-frame-pointer)
+    target_link_options(aimt_build_options INTERFACE -fsanitize=address,undefined)
+endif()
+
+add_library(aimt_core STATIC src/core/version.c src/core/app.c src/core/security/policy.c)
+target_include_directories(aimt_core PUBLIC include)
+target_link_libraries(aimt_core PRIVATE aimt_build_options)
+
+add_library(aimt_cli STATIC src/ui/cli.c)
+target_link_libraries(aimt_cli PUBLIC aimt_core PRIVATE aimt_build_options)
+
+add_executable(ai-multitool-agents-manager src/main.c)
+target_link_libraries(ai-multitool-agents-manager PRIVATE aimt_cli aimt_build_options)
+
+if(AIMT_BUILD_GUI AND NOT AIMT_BUILD_LOCAL_SERVICES)
+    message(FATAL_ERROR "GUI requires AIMT_BUILD_LOCAL_SERVICES; disable GUI for a minimal CLI build")
+endif()
+if(AIMT_BUILD_LOCAL_SERVICES)
+    find_package(PkgConfig REQUIRED)
+    find_package(Threads REQUIRED)
+    pkg_check_modules(CURL REQUIRED IMPORTED_TARGET libcurl>=7.85)
+    pkg_check_modules(JSONC REQUIRED IMPORTED_TARGET json-c>=0.15)
+    add_library(aimt_desktop_services STATIC src/core/plugin.c src/core/models/catalog.c src/core/learning/coordinator_lessons.c
+        src/core/storage/module_settings.c src/core/storage/project_book.c src/providers/discovery.c src/providers/ollama/profile.c src/providers/ollama/pull.c src/providers/ollama/generate.c src/providers/codex/client.c src/tools/files/project.c)
+    target_link_libraries(aimt_desktop_services PUBLIC aimt_core Threads::Threads PkgConfig::CURL PkgConfig::JSONC
+        PRIVATE aimt_build_options m)
+    add_library(aimt_expert_protocol STATIC src/core/tasks/expert_protocol.c)
+    target_link_libraries(aimt_expert_protocol PUBLIC aimt_core PkgConfig::JSONC PRIVATE aimt_build_options)
+    add_executable(ai-multitool-agents-manager-expert-check src/ui/expert_check_cli.c)
+    target_link_libraries(ai-multitool-agents-manager-expert-check PRIVATE aimt_expert_protocol aimt_build_options)
+    add_executable(aimt-codex-shell src/providers/codex/guard.c)
+    set_target_properties(aimt-codex-shell PROPERTIES OUTPUT_NAME bash RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/codex-sandbox-tools")
+    target_compile_options(aimt-codex-shell PRIVATE -Wall -Wextra -Wpedantic)
+    add_executable(aimt-codex-guard src/providers/codex/guard.c)
+    target_compile_options(aimt-codex-guard PRIVATE -Wall -Wextra -Wpedantic)
+    add_executable(ai-multitool-agents-manager-models src/ui/models_cli.c)
+    add_executable(ai-multitool-agents-manager-coordinate src/ui/coordinator_cli.c)
+    target_link_libraries(ai-multitool-agents-manager-coordinate PRIVATE aimt_desktop_services aimt_build_options)
+    target_compile_definitions(ai-multitool-agents-manager-models PRIVATE AIMT_DEFAULT_CATALOG="${CMAKE_CURRENT_SOURCE_DIR}/configs/model-catalog.json"
+        AIMT_DEFAULT_PLUGINS="${CMAKE_CURRENT_SOURCE_DIR}/Modules"
+        AIMT_DEFAULT_SETTINGS="${CMAKE_CURRENT_SOURCE_DIR}/configs/module-settings")
+    target_link_libraries(ai-multitool-agents-manager-models PRIVATE aimt_desktop_services aimt_build_options)
+endif()
+if(AIMT_BUILD_GUI)
+    pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET sdl2>=2.0.18)
+    add_executable(ai-multitool-agents-manager-gui src/ui/desktop.c)
+    target_include_directories(ai-multitool-agents-manager-gui SYSTEM PRIVATE thirdparty/nuklear)
+    target_compile_definitions(ai-multitool-agents-manager-gui PRIVATE AIMT_DEFAULT_PLUGINS="${CMAKE_CURRENT_SOURCE_DIR}/Modules"
+        AIMT_DEFAULT_CATALOG="${CMAKE_CURRENT_SOURCE_DIR}/configs/model-catalog.json"
+        AIMT_DEFAULT_SETTINGS="${CMAKE_CURRENT_SOURCE_DIR}/configs/module-settings")
+    add_dependencies(ai-multitool-agents-manager-gui aimt-codex-guard aimt-codex-shell)
+    target_link_libraries(ai-multitool-agents-manager-gui PRIVATE aimt_desktop_services PkgConfig::SDL2 aimt_build_options m)
+endif()

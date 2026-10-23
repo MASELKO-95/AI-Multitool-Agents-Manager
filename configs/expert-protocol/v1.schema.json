@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AI Multitool Agents Manager: expert contract v1",
+  "description": "Data, never permissions or tool evidence. The C validator also checks UTF-8 byte limits, duplicate/escaped keys, paths, attempt order and source ranges.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["v", "kind", "task_id", "subtask_id", "role", "operation", "sources"],
+  "properties": {
+    "v": {"type": "integer", "const": 1},
+    "kind": {"enum": ["request", "proposal", "needs_guidance"]},
+    "task_id": {"$ref": "#/$defs/id"},
+    "subtask_id": {"$ref": "#/$defs/id"},
+    "role": {"enum": ["planner", "coordinator", "project_analysis", "api_contracts", "implement_c", "implement_cpp", "implement_python", "build_diagnosis", "behavior_diagnosis", "tests", "code_review", "memory_concurrency", "performance"]},
+    "operation": {"enum": ["plan", "route", "analyze_project", "define_api", "implement", "diagnose_build", "diagnose_behavior", "propose_tests", "review", "analyze_memory", "analyze_performance"]},
+    "sources": {"type": "array", "maxItems": 8, "uniqueItems": true, "items": {"$ref": "#/$defs/source"}},
+    "goal": {"type": "string", "minLength": 1, "maxLength": 2048},
+    "api": {"type": "array", "maxItems": 8, "items": {"type": "string", "minLength": 1, "maxLength": 1024}},
+    "constraints": {"type": "array", "maxItems": 8, "items": {"type": "string", "minLength": 1, "maxLength": 256}},
+    "acceptance": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"type": "string", "minLength": 1, "maxLength": 512}},
+    "pseudocode": {"type": "string", "minLength": 1, "maxLength": 4096},
+    "text": {"type": "string", "minLength": 1, "maxLength": 8192},
+    "missing": {"type": "array", "maxItems": 8, "items": {"type": "string", "minLength": 1, "maxLength": 512}},
+    "attempts": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"$ref": "#/$defs/attempt"}},
+    "question": {"type": "string", "minLength": 1, "maxLength": 1024}
+  },
+  "allOf": [
+    {
+      "oneOf": [
+        {"properties": {"role": {"const": "planner"}, "operation": {"const": "plan"}}},
+        {"properties": {"role": {"const": "coordinator"}, "operation": {"const": "route"}}},
+        {"properties": {"role": {"const": "project_analysis"}, "operation": {"const": "analyze_project"}}},
+        {"properties": {"role": {"const": "api_contracts"}, "operation": {"const": "define_api"}}},
+        {"properties": {"role": {"enum": ["implement_c", "implement_cpp", "implement_python"]}, "operation": {"const": "implement"}}},
+        {"properties": {"role": {"const": "build_diagnosis"}, "operation": {"const": "diagnose_build"}}},
+        {"properties": {"role": {"const": "behavior_diagnosis"}, "operation": {"const": "diagnose_behavior"}}},
+        {"properties": {"role": {"const": "tests"}, "operation": {"const": "propose_tests"}}},
+        {"properties": {"role": {"const": "code_review"}, "operation": {"const": "review"}}},
+        {"properties": {"role": {"const": "memory_concurrency"}, "operation": {"const": "analyze_memory"}}},
+        {"properties": {"role": {"const": "performance"}, "operation": {"const": "analyze_performance"}}}
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "properties": {"kind": {"const": "request"}},
+          "required": ["goal", "api", "constraints", "acceptance"],
+          "not": {"anyOf": [{"required": ["text"]}, {"required": ["missing"]}, {"required": ["attempts"]}, {"required": ["question"]}]}
+        },
+        {
+          "properties": {"kind": {"const": "proposal"}},
+          "required": ["text", "missing"],
+          "not": {"anyOf": [{"required": ["goal"]}, {"required": ["api"]}, {"required": ["constraints"]}, {"required": ["acceptance"]}, {"required": ["attempts"]}, {"required": ["question"]}]}
+        },
+        {
+          "properties": {"kind": {"const": "needs_guidance"}, "role": {"not": {"const": "coordinator"}}},
+          "required": ["attempts", "missing", "question"],
+          "not": {"anyOf": [{"required": ["goal"]}, {"required": ["api"]}, {"required": ["constraints"]}, {"required": ["acceptance"]}, {"required": ["text"]}, {"required": ["pseudocode"]}]}
+        }
+      ]
+    }
+  ],
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"},
+    "revision": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "revision", "first_line", "last_line"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1, "maxLength": 511, "pattern": "^[^/\\\\:\t\n]+(?:/[^/\\\\:\t\n]+)*$"},
+        "revision": {"$ref": "#/$defs/revision"},
+        "first_line": {"type": "integer", "minimum": 1, "maximum": 10000000},
+        "last_line": {"type": "integer", "minimum": 1, "maximum": 10000000}
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempt", "input_revision", "failure", "change", "error"],
+      "properties": {
+        "attempt": {"type": "integer", "minimum": 1, "maximum": 128},
+        "input_revision": {"$ref": "#/$defs/revision"},
+        "failure": {"enum": ["invalid_output", "build_failed", "test_failed", "missing_context"]},
+        "change": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "error": {"type": "string", "minLength": 1, "maxLength": 1024}
+      }
+    }
+  }
+}

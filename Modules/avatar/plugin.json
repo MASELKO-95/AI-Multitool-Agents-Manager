@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "id": "avatar",
+  "title": "Avatar / conversation",
+  "description": "Planned 2D/3D avatar with voice conversation and optional camera input.",
+  "settings": [
+    {
+      "key": "avatar_type",
+      "label": "Avatar",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "Lightweight 2D",
+        "3D model"
+      ]
+    },
+    {
+      "key": "avatar_file",
+      "label": "Avatar file / GLB model",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "character_prompt",
+      "label": "Avatar description",
+      "type": "text",
+      "default": "A calm, friendly assistant avatar."
+    },
+    {
+      "key": "conversation_role",
+      "label": "Conversation role",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "Assistant",
+        "Conversation partner",
+        "Emotional support",
+        "Game development assistant"
+      ]
+    },
+    {
+      "key": "microphone_enabled",
+      "label": "Microphone (after Start)",
+      "type": "bool",
+      "default": false
+    },
+    {
+      "key": "camera_enabled",
+      "label": "Camera (after Start)",
+      "type": "bool",
+      "default": false
+    },
+    {
+      "key": "camera_interval",
+      "label": "Camera analysis interval / seconds",
+      "type": "int",
+      "default": 2,
+      "min": 1,
+      "max": 60
+    },
+    {
+      "key": "lip_sync",
+      "label": "Lip synchronization",
+      "type": "bool",
+      "default": true
+    },
+    {
+      "key": "save_session",
+      "label": "Save conversation and recording",
+      "type": "bool",
+      "default": false
+    },
+    {
+      "key": "instructions",
+      "label": "Instruction",
+      "type": "text",
+      "default": "Speak English concisely. Do not infer emotions or intent from camera images alone."
+    }
+  ],
+  "requires": [
+    "completion",
+    "stt",
+    "tts"
+  ]
+}

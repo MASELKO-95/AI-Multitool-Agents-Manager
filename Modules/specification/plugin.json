@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "specification",
+  "title": "Planning",
+  "description": "Convert an idea into requirements and acceptance criteria.",
+  "settings": [
+    {
+      "key": "ask_questions",
+      "label": "Clarify ambiguities",
+      "type": "bool",
+      "default": true
+    },
+    {
+      "key": "detail_level",
+      "label": "Detail level",
+      "type": "choice",
+      "choices": [
+        "Concise",
+        "Standard",
+        "Detailed"
+      ],
+      "default": 1
+    }
+  ]
+}

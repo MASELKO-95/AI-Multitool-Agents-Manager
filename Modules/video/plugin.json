@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "id": "video",
+  "title": "Video",
+  "description": "File and camera analysis with editing plans. Runtime planned.",
+  "settings": [
+    {
+      "key": "source",
+      "label": "Source",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "Video file",
+        "Live camera"
+      ]
+    },
+    {
+      "key": "video_file",
+      "label": "Video file",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "camera_index",
+      "label": "Camera index",
+      "type": "int",
+      "default": 0,
+      "min": 0,
+      "max": 16
+    },
+    {
+      "key": "sample_seconds",
+      "label": "Frame interval / seconds",
+      "type": "int",
+      "default": 2,
+      "min": 1,
+      "max": 60
+    },
+    {
+      "key": "max_frame_edge",
+      "label": "Maximum frame dimension",
+      "type": "int",
+      "default": 768,
+      "min": 256,
+      "max": 2048
+    },
+    {
+      "key": "queue_frames",
+      "label": "Queued frames",
+      "type": "int",
+      "default": 2,
+      "min": 1,
+      "max": 8
+    },
+    {
+      "key": "transcribe_audio",
+      "label": "Audio transcription",
+      "type": "bool",
+      "default": true
+    },
+    {
+      "key": "save_recording",
+      "label": "Save recording",
+      "type": "bool",
+      "default": false
+    },
+    {
+      "key": "operation",
+      "label": "Operation",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "Analysis",
+        "Subtitles",
+        "Cut / edit"
+      ]
+    },
+    {
+      "key": "instructions",
+      "label": "Instruction",
+      "type": "text",
+      "default": "Report events with frame timestamps. Editing produces a plan to review before export."
+    }
+  ],
+  "requires": [
+    "vision"
+  ]
+}

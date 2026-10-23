@@ -1,0 +1,11 @@
+#ifndef AIMT_MODEL_CAPABILITY_H
+#define AIMT_MODEL_CAPABILITY_H
+#define AIMT_MODEL_COMPLETION (1u << 0)
+#define AIMT_MODEL_VISION (1u << 1)
+#define AIMT_MODEL_EMBEDDING (1u << 2)
+#define AIMT_MODEL_TOOLS (1u << 3)
+#define AIMT_MODEL_IMAGE_GENERATION (1u << 4)
+#define AIMT_MODEL_STT (1u << 5)
+#define AIMT_MODEL_TTS (1u << 6)
+#define AIMT_MODEL_MESH_GENERATION (1u << 7)
+#endif

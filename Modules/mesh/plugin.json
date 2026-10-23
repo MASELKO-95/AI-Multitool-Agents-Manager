@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "mesh",
+  "title": "3D models",
+  "description": "Planned mesh generation from images and prompts with export validation.",
+  "settings": [
+    {
+      "key": "input_mode",
+      "label": "Input",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "Image",
+        "Multiple views",
+        "Prompt"
+      ]
+    },
+    {
+      "key": "reference_image",
+      "label": "Reference image",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "mesh_engine",
+      "label": "3D engine / select",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "polygon_budget",
+      "label": "Triangle budget",
+      "type": "int",
+      "default": 50000,
+      "min": 1000,
+      "max": 1000000
+    },
+    {
+      "key": "export_format",
+      "label": "Format",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "GLB",
+        "OBJ",
+        "PLY"
+      ]
+    },
+    {
+      "key": "generate_texture",
+      "label": "Generate texture",
+      "type": "bool",
+      "default": true
+    },
+    {
+      "key": "validate_mesh",
+      "label": "Validate mesh",
+      "type": "bool",
+      "default": true
+    },
+    {
+      "key": "instructions",
+      "label": "Instruction",
+      "type": "text",
+      "default": "Separate geometry generation from textures; show a preview before exporting."
+    }
+  ],
+  "requires": [
+    "mesh_generation"
+  ]
+}

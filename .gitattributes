@@ -1,0 +1,18 @@
+* text=auto eol=lf
+
+# Additional exclusions for Git archives.
+.local export-ignore
+.codex export-ignore
+.agents export-ignore
+.aws export-ignore
+.aimt-projects export-ignore
+.aimt-learning export-ignore
+configs/module-settings export-ignore
+configs/coordinator-learning export-ignore
+WORK_LOG.md export-ignore
+docs/PRZEKAZANIE-SESJI-*.md export-ignore
+docs/ROZMOWA-*.md export-ignore
+docs/RATCHET-*.md export-ignore
+docs/CHECKPOINT-RATCHET-*.md export-ignore
+tests export-ignore
+tools/test-*.py export-ignore

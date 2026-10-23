@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "translation",
+  "title": "Translation",
+  "description": "Text localization, glossary and batch preparation.",
+  "settings": [
+    {
+      "key": "source_language",
+      "label": "Source language",
+      "type": "text",
+      "default": "auto"
+    },
+    {
+      "key": "target_language",
+      "label": "Target language",
+      "type": "text",
+      "default": "English"
+    },
+    {
+      "key": "batch_records",
+      "label": "Maximum records per batch",
+      "type": "int",
+      "min": 1,
+      "max": 1000,
+      "default": 50
+    },
+    {
+      "key": "preserve_placeholders",
+      "label": "Preserve placeholders",
+      "type": "bool",
+      "default": true
+    }
+  ]
+}

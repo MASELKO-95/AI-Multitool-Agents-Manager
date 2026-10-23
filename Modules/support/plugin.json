@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "support",
+  "title": "Assistant",
+  "description": "Supportive conversation and organization; no screen access.",
+  "settings": [
+    {
+      "key": "tone",
+      "label": "Conversation tone",
+      "type": "choice",
+      "choices": [
+        "Calm",
+        "Practical",
+        "Friendly"
+      ],
+      "default": 0
+    },
+    {
+      "key": "personal_memory",
+      "label": "Use selected memories",
+      "type": "bool",
+      "default": false
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "id": "images",
+  "title": "Images",
+  "description": "Image generation and editing; runtime adapter planned.",
+  "settings": [
+    {
+      "key": "engine",
+      "label": "Image engine",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "stable-diffusion.cpp",
+        "ComfyUI (local)"
+      ]
+    },
+    {
+      "key": "checkpoint",
+      "label": "Image model file",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "width",
+      "label": "Width",
+      "type": "int",
+      "default": 512,
+      "min": 256,
+      "max": 2048
+    },
+    {
+      "key": "height",
+      "label": "Height",
+      "type": "int",
+      "default": 512,
+      "min": 256,
+      "max": 2048
+    },
+    {
+      "key": "steps",
+      "label": "Steps",
+      "type": "int",
+      "default": 20,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "seed",
+      "label": "Seed",
+      "type": "int",
+      "default": 42,
+      "min": 0,
+      "max": 1000000
+    },
+    {
+      "key": "operation",
+      "label": "Operation",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "From prompt",
+        "From image",
+        "Inpainting"
+      ]
+    },
+    {
+      "key": "negative_prompt",
+      "label": "Negative prompt",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "cpu_offload",
+      "label": "Offload model layers to RAM",
+      "type": "bool",
+      "default": true
+    },
+    {
+      "key": "instructions",
+      "label": "Instruction",
+      "type": "text",
+      "default": "Keep character and style descriptions consistent; save files only after user approval."
+    }
+  ],
+  "requires": [
+    "image_generation"
+  ]
+}

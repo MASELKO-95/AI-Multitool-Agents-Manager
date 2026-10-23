@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "id": "speech",
+  "title": "Voice / XTTS",
+  "description": "Planned local STT and voice synthesis through separately installed XTTS v2.",
+  "settings": [
+    {
+      "key": "stt_engine",
+      "label": "Speech recognition",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "whisper.cpp",
+        "Other local"
+      ]
+    },
+    {
+      "key": "stt_model",
+      "label": "STT model",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "tts_engine",
+      "label": "Voice synthesis",
+      "type": "choice",
+      "default": 0,
+      "choices": [
+        "XTTS v2",
+        "Other local"
+      ]
+    },
+    {
+      "key": "xtts_model",
+      "label": "Local katalog XTTS v2",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "speaker_wav",
+      "label": "Voice reference recording",
+      "type": "text",
+      "default": ""
+    },
+    {
+      "key": "language",
+      "label": "Language",
+      "type": "text",
+      "default": "en"
+    },
+    {
+      "key": "push_to_talk",
+      "label": "Push to talk",
+      "type": "bool",
+      "default": true
+    },
+    {
+      "key": "save_audio",
+      "label": "Save audio",
+      "type": "bool",
+      "default": false
+    },
+    {
+      "key": "chunk_seconds",
+      "label": "Chunk length / seconds",
+      "type": "int",
+      "default": 8,
+      "min": 1,
+      "max": 30
+    },
+    {
+      "key": "instructions",
+      "label": "Instruction",
+      "type": "text",
+      "default": "Reply briefly and naturally; allow interrupting voice output."
+    }
+  ],
+  "requires": [
+    "stt",
+    "tts"
+  ]
+}

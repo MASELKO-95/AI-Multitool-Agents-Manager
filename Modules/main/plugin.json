@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "main",
+  "title": "Main chat",
+  "description": "Shared session, model selection and module coordination.",
+  "settings": [
+    {
+      "key": "assistant_style",
+      "label": "Response style",
+      "type": "choice",
+      "choices": [
+        "Direct",
+        "Detailed",
+        "Casual"
+      ],
+      "default": 0
+    },
+    {
+      "key": "instructions",
+      "label": "User instruction",
+      "type": "text",
+      "default": "Respond in English, clearly and specifically."
+    }
+  ]
+}

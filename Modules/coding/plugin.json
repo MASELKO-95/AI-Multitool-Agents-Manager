@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "coding",
+  "title": "Coding",
+  "description": "Work on project code. The file worker is not implemented yet.",
+  "settings": [
+    {
+      "key": "language",
+      "label": "Project language",
+      "type": "choice",
+      "choices": [
+        "C / C++",
+        "Python",
+        "GDScript",
+        "Other"
+      ],
+      "default": 0
+    },
+    {
+      "key": "run_tests",
+      "label": "Verify results with tests",
+      "type": "bool",
+      "default": true
+    },
+    {
+      "key": "instructions",
+      "label": "Project rules",
+      "type": "text",
+      "default": "Consider security and bounded memory use."
+    }
+  ]
+}
